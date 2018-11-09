@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {GET} from "../api/utils/";
+import services from "../api/services"
 
 import FullCalendar from "fullcalendar-reactwrapper";
 
@@ -11,8 +12,8 @@ class CalendarComponent extends React.Component {
         this.state= {
             events: []
         }
-        let context = this
-        GET("http://localhost:8080/myapp/event/all").then(result => {
+
+        services.getAllEvents().then(result => {
                 this.setState({events:result})
             }
         )
