@@ -1,40 +1,43 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import {GET} from "../api/utils/";
 
-// ... and fullcalendar-reactwrapper.
-import FullCalendar from 'fullcalendar-reactwrapper';
+import FullCalendar from "fullcalendar-reactwrapper";
 
 class CalendarComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    events:[
-                {
-                    title: 'All Day Event',
-                    start: '2018-05-01'
-                }
-            ],
-    }
-  }
+    constructor(props) {
+        super(props);
 
-  render() {
-    return (
-      <div id="calendar">
-        <FullCalendar
-             id = "your-custom-ID"
-         header = {{
-            left: 'prev,next today myCustomButton',
-            center: 'title',
-            right: 'month,basicDay'
-        }}
-        navLinks= {true} // can click day/week names to navigate views
-        editable= {true}
-        eventLimit= {true} // allow "more" link when too many events
-        events = {this.state.events}
-    />
-      </div>
-    );
-  }
+        this.state= {
+            events: []
+        }
+        let context = this
+        GET("http://localhost:8080/myapp/event/all").then(result => {
+                this.setState({events:result})
+            }
+        )
+    }
+
+    render() {
+        return (
+            <div>
+                <div id="calendar">
+                    <FullCalendar
+                        id="your-custom-ID"
+                        header={{
+                            left: "prev,next today myCustomButton",
+                            center: "title",
+                            right: "month,basicDay"
+                        }}
+                        navLinks={true} // can click day/week names to navigate views
+                        editable={true}
+                        eventLimit={true} // allow "more" link when too many events
+                        events={this.state.events}
+                    />
+                </div>
+            </div>
+        );
+    }
 }
 
 export default CalendarComponent;
