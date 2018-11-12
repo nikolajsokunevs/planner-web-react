@@ -20,9 +20,9 @@ function requestWrapper(method) {
         return axios(initialRequetData).then(function (response) {
             console.log('RESPONSE DONE')
             return parseDataJSON(response)
-        }).catch(function (error) {
-            console.log(error)
-            return error;
+        }).catch(function(error){
+          console.log(error)
+          return error;
         })
     }
 }

@@ -1,15 +1,21 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import {GET} from "../api/utils/";
-import services from "../api/services"
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import services from "../api/services"
 
 class ModalComponent extends React.Component {
+
     constructor(props) {
         super(props);
-
     }
+
+    createEvent = (event) => {
+        services.createEvent(event).then(result => {
+            console.log(result)
+            this.props.getAllEvents()
+            }
+        )
+
+    };
 
     render() {
         return (
@@ -50,7 +56,7 @@ class ModalComponent extends React.Component {
                             </div>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="success" onClick={this.props.hideModal}>Submit</Button>
+                            <Button color="success" onClick={({})=>this.createEvent(event)}>Submit</Button>
                             <Button color="danger" onClick={this.props.hideModal}>Delete</Button>
                         </ModalFooter>
                     </form>

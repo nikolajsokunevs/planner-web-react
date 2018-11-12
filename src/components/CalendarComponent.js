@@ -1,9 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import {GET} from "../api/utils/";
 import services from "../api/services"
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
 import FullCalendar from "fullcalendar-reactwrapper";
 import ModalComponent from "./ModalComponent";
 
@@ -16,16 +12,19 @@ class CalendarComponent extends React.Component {
             showModalDialog: false
         }
 
+        this.getAllEvents()
+    }
+
+    getAllEvents = () => {
         services.getAllEvents().then(result => {
                 this.setState({events: result, showModalDialog: false})
             }
         )
-    }
+    };
 
     showModal = () => {
         let evenets=this.state.events
         this.setState({ events: evenets,showModalDialog: true });
-        console.log()
     };
 
     hideModal = () => {
@@ -46,9 +45,9 @@ class CalendarComponent extends React.Component {
                             center: "title",
                             right: "month,basicDay"
                         }}
-                        navLinks={true} // can click day/week names to navigate views
+                        navLinks={true}
                         editable={true}
-                        eventLimit={true} // allow "more" link when too many events
+                        eventLimit={true}
                         events={this.state.events}
                         dayClick={()=>this.showModal()}
                     />
