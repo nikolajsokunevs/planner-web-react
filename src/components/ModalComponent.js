@@ -14,7 +14,7 @@ class ModalComponent extends React.Component {
     render() {
         return (
             <div>
-                <Modal isOpen={this.props.showModalDialog} bsSize={"sm"}>
+                <Modal isOpen={this.props.showModalDialog}>
                     <form onSubmit={this.hideModal}>
                         <ModalHeader>Create new event</ModalHeader>
                         <ModalBody>
@@ -50,8 +50,8 @@ class ModalComponent extends React.Component {
                             </div>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="success" onClick={this.hideModal}>Submit</Button>
-                            <Button color="danger" onClick={this.hideModal}>Delete</Button>
+                            <Button color="success" onClick={this.props.hideModal}>Submit</Button>
+                            <Button color="danger" onClick={this.props.hideModal}>Delete</Button>
                         </ModalFooter>
                     </form>
                 </Modal>

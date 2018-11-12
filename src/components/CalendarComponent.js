@@ -37,7 +37,7 @@ class CalendarComponent extends React.Component {
     render() {
         return (
             <div>
-                <ModalComponent showModalDialog={this.state.showModalDialog}/>
+                <ModalComponent showModalDialog={this.state.showModalDialog} hideModal={this.hideModal}/>
                 <div id="calendar">
                     <FullCalendar
                         id="your-custom-ID"
