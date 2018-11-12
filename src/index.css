@@ -28,3 +28,11 @@ code {
 #calendar .fc-day:hover{
   background: #ccc;
 }
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
