@@ -9,7 +9,8 @@ class CalendarComponent extends React.Component {
 
         this.state = {
             events: [],
-            showModalDialog: false
+            showModalDialog: false,
+            clickedDate:null
         }
 
         this.getAllEvents()
@@ -22,9 +23,9 @@ class CalendarComponent extends React.Component {
         )
     };
 
-    showModal = () => {
+    showModal = (date) => {
         let evenets=this.state.events
-        this.setState({ events: evenets,showModalDialog: true });
+        this.setState({ events: evenets,showModalDialog: true, clickedDate:date });
     };
 
     hideModal = () => {
@@ -36,7 +37,7 @@ class CalendarComponent extends React.Component {
     render() {
         return (
             <div>
-                <ModalComponent showModalDialog={this.state.showModalDialog} hideModal={this.hideModal}/>
+                <ModalComponent showModalDialog={this.state.showModalDialog} hideModal={this.hideModal} getAllEvents={this.getAllEvents} clickedDate={this.state.clickedDate}/>
                 <div id="calendar">
                     <FullCalendar
                         id="your-custom-ID"
@@ -49,7 +50,7 @@ class CalendarComponent extends React.Component {
                         editable={true}
                         eventLimit={true}
                         events={this.state.events}
-                        dayClick={()=>this.showModal()}
+                        dayClick={(date)=>this.showModal(date)}
                     />
                 </div>
             </div>

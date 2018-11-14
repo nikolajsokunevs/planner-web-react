@@ -16,9 +16,7 @@ function requestWrapper(method) {
             data: body,
             headers: headers
         };
-
         return axios(initialRequetData).then(function (response) {
-            console.log('RESPONSE DONE')
             return parseDataJSON(response)
         }).catch(function(error){
           console.log(error)

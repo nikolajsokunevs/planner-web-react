@@ -6,16 +6,43 @@ class ModalComponent extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            isGoing: true,
+            numberOfGuests: 2
+        };
+
     }
 
-    createEvent = (event) => {
-        services.createEvent(event).then(result => {
-            console.log(result)
-            this.props.getAllEvents()
-            }
-        )
+    createEvent = () => {
 
+        let date=this.props.clickedDate._d
+
+        let event={title:this.state.event,
+            clientName:this.state.clientFirstName,
+            clientLastName:this.state.clientLastName,
+            cliectPhoneNumber:this.state.phoneNumber,
+            master:this.state.master,
+            start:date.toISOString().substring(0, 10)+'T'+this.state.startTime,
+            end:date.toISOString().substring(0, 10)+'T'+this.state.endTime,
+            allDay:false,
+        }
+
+        console.log(event)
+       // services.createEvent().then(result => {
+         //   console.log(result)
+            this.props.getAllEvents()
+         //   }
+        //)
     };
+
+    handleInputChange=(event)=>{
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const id = target.id;
+        this.setState({
+            [id]: value
+        });
+    }
 
     render() {
         return (
@@ -27,36 +54,48 @@ class ModalComponent extends React.Component {
                             <div className="row">
                                 <div className="form-group col-md-4">
                                     <label>Event:</label>
-                                    <input id="event" type="text" className="form-control" />
+                                    <input id="event" type="text" className="form-control" onChange={this.handleInputChange} />
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="form-group col-md-4">
-                                    <label>Client Name:</label>
-                                    <input id="clientName" type="text" className="form-control" />
+                                    <label>Client First Name:</label>
+                                    <input id="clientFirstName" type="text" className="form-control" onChange={this.handleInputChange} />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="form-group col-md-4">
+                                    <label>Client Last Name:</label>
+                                    <input id="clienLastName" type="text" className="form-control" onChange={this.handleInputChange} />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="form-group col-md-4">
+                                    <label>Master:</label>
+                                    <input id="master" type="text" className="form-control" onChange={this.handleInputChange} />
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="form-group col-md-4">
                                     <label>Phone number:</label>
-                                    <input id="phoneNumber" type="text" className="form-control" />
+                                    <input id="phoneNumber" type="text" className="form-control" onChange={this.handleInputChange} />
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="form-group col-md-4">
                                     <label>Start time:</label>
-                                    <input id="startTime" type="text" className="form-control" />
+                                    <input id="startTime" type="text" className="form-control" onChange={this.handleInputChange} />
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="form-group col-md-4">
                                     <label>End time:</label>
-                                    <input id="endTime" type="text" className="form-control" />
+                                    <input id="endTime" type="text" className="form-control" onChange={this.handleInputChange} />
                                 </div>
                             </div>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="success" onClick={({})=>this.createEvent(event)}>Submit</Button>
+                            <Button color="success" onClick={this.createEvent}>Submit</Button>
                             <Button color="danger" onClick={this.props.hideModal}>Delete</Button>
                         </ModalFooter>
                     </form>
