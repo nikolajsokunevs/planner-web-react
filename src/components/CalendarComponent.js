@@ -18,7 +18,7 @@ class CalendarComponent extends React.Component {
 
     getAllEvents = () => {
         services.getAllEvents().then(result => {
-           //     this.setState({events: result, showModalDialog: false})
+                this.setState({events: result, showModalDialog: false})
             }
         )
     };

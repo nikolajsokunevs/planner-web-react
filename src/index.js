@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './fullcalendar.min.css'
-//import CalendarComponent from './components/CalendarComponent';
-import ModalComponent from './components/ModalComponent';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import CalendarComponent from "./components/CalendarComponent";
