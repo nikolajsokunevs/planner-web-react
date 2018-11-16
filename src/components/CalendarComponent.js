@@ -18,19 +18,18 @@ class CalendarComponent extends React.Component {
 
     getAllEvents = () => {
         services.getAllEvents().then(result => {
-                this.setState({events: result, showModalDialog: false})
+           //     this.setState({events: result, showModalDialog: false})
             }
         )
     };
 
     showModal = (date) => {
-        let evenets=this.state.events
-        this.setState({ events: evenets,showModalDialog: true, clickedDate:date });
+        const events=this.state.events
+        this.setState({ events: events,showModalDialog: true, clickedDate:date });
     };
 
     hideModal = () => {
-        console.log('CALLED')
-        let evenets=this.state.events
+        const evenets=this.state.events
         this.setState({ events: evenets, showModalDialog: false });
     };
 

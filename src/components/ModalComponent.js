@@ -14,10 +14,8 @@ class ModalComponent extends React.Component {
     }
 
     createEvent = () => {
-
-        let date=this.props.clickedDate._d
-
-        let event={title:this.state.event,
+        const date=this.props.clickedDate._d
+        const event={title:this.state.event,
             clientName:this.state.clientFirstName,
             clientLastName:this.state.clientLastName,
             cliectPhoneNumber:this.state.phoneNumber,
@@ -26,13 +24,11 @@ class ModalComponent extends React.Component {
             end:date.toISOString().substring(0, 10)+'T'+this.state.endTime,
             allDay:false,
         }
+        const getAllEvents=this.props.getAllEvents
+        services.createEvent(event).then(()=>{
+            getAllEvents()
+        })
 
-        console.log(event)
-       // services.createEvent().then(result => {
-         //   console.log(result)
-            this.props.getAllEvents()
-         //   }
-        //)
     };
 
     handleInputChange=(event)=>{
