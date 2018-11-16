@@ -7,17 +7,48 @@ class ModalComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            event: {}
+            event: {},
+            titleValid: false,
+            startValid: false,
+            endValid: false,
+            cliectPhoneNumber: false,
+            formVaild: false
         };
+    }
+
+    validateField(fieldName, value){
+        let validationPassed=false;
+
+        switch(fieldName) {
+            case 'titleValid':
+                validationPassed = value.length>0?true:false
+                break;
+            case 'startValid':
+                validationPassed = value.length>0?true:false
+                break;
+            case 'endValid':
+                validationPassed = value.length>0?true:false
+                break
+            case 'cliectPhoneNumber':
+                validationPassed = value.length>0?true:false
+                break
+            default:
+                break;
+        }
+        this.setState(this.state[fieldName+'Valid']=validationPassed);
+    }
+
+    validateForm() {
+        this.setState({formValid: this.state.emailValid && this.state.passwordValid});
     }
 
     createEvent = () => {
         console.log(this.state.event)
         const getAllEvents = this.props.getAllEvents
-        services.createEvent(this.state.event).then((result) => {
-            console.log(result)
-            getAllEvents()
-        })
+    //    services.createEvent(this.state.event).then((result) => {
+    //        console.log(result)
+    //        getAllEvents()
+    //    })
 
     };
 
@@ -25,8 +56,10 @@ class ModalComponent extends React.Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+
         (name === 'start' || name === 'end') ? (this.state.event[name] = this.props.clickedDate._d.toISOString().substring(0, 10) + 'T' + value) :
             (this.state.event[name] = value)
+   
     }
 
 
