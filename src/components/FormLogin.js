@@ -1,80 +1,81 @@
-import React, { Component } from 'react';
-import { FormErrors } from './FormErrors';
+import React, {Component} from 'react';
 import '../Form.css';
 
 class FormLogin extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
-            login: '',
-            password: '',
-            formErrors: {login: '', password: ''},
-            loginValid: false,
-            passwordValid: false,
-            formValid: false
+            fields: {
+                login: {value: '', mandatory: true, valid: true},
+                password: {value: '', mandatory: true, valid: true}
+            }
         }
+    }
+
+    doLogin = () => {
+        const fields=this.state.fields
+        const values=Object.values(fields);
+        for(let i=0;i<values.length;i++){
+           if (values[i].mandatory){
+               values[i].valid=(values[i].value.length>0)?values[i].valid:values[i].valid=false
+           }
+        }
+        this.setState({fields:fields})
     }
 
     handleUserInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        this.setState({[name]: value},
-            () => { this.validateField(name, value) });
+        let fields = this.state.fields
+        fields[name].value = value
+        this.validateField(name, value)
+        this.setState({fields: fields});
     }
 
     validateField(fieldName, value) {
-        let fieldValidationErrors = this.state.formErrors;
-        let loginValid = this.state.loginValid;
-        let passwordValid = this.state.passwordValid;
+        let login = this.state.fields.login;
+        let password = this.state.fields.password;
 
-        switch(fieldName) {
+        switch (fieldName) {
             case 'login':
-                loginValid = value.length >= 1;
-                fieldValidationErrors.login = loginValid ? '' : ' is invalid';
+                login.valid = value.length >= 1;
                 break;
             case 'password':
-                passwordValid = value.length >= 6;
-                fieldValidationErrors.password = passwordValid ? '': ' is too short';
+                password.valid = value.length >= 6;
                 break;
             default:
                 break;
         }
-        this.setState({formErrors: fieldValidationErrors,
-            loginValid: loginValid,
-            passwordValid: passwordValid
-        }, this.validateForm);
-    }
-
-    validateForm() {
-        this.setState({formValid: this.state.loginValid && this.state.passwordValid});
     }
 
     errorClass(error) {
-        return(error.length === 0 ? '' : 'is-invalid');
+        console.log(error)
+        return (error === true ? '' : 'has-error');
     }
 
-    render () {
+    render() {
         return (
             <form className="demoForm">
                 <h2>Sign up</h2>
-                <div className="panel panel-default">
-                    <FormErrors formErrors={this.state.formErrors} />
-                </div>
-                <div className={`form-group ${this.errorClass(this.state.formErrors.login)}`}>
+                <div className={`form-group ${this.errorClass(this.state.fields.login.valid)}`}>
                     <label htmlFor="login">Login</label>
-                    <input type="login" required className="form-control" name="login"
+                    <input type="login" required
+                           className={`form-control`}
+                           name="login"
                            placeholder="login"
-                           value={this.state.login}
-                           onChange={this.handleUserInput}  />
+                           value={this.state.fields.login.value}
+                           onChange={this.handleUserInput}/>
                 </div>
-                <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
+                <div className={`form-group ${this.errorClass(this.state.fields.password.valid)}`}>
                     <label htmlFor="password">Password</label>
-                    <input type="password" className="form-control" name="password"
+                    <input type="password" required
+                           className={`form-control`}
+                           name="password"
                            placeholder="password"
-                           value={this.state.password}
-                           onChange={this.handleUserInput}  />
+                           value={this.state.fields.password.value}
+                           onChange={this.handleUserInput}/>
                 </div>
-                <button type="submit" className="btn btn-primary" disabled={!this.state.formValid}>Sign up</button>
+                <button type="submit" className="btn btn-primary" onClick={this.doLogin}>Sign up</button>
             </form>
         )
     }

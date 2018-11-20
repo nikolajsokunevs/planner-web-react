@@ -42,9 +42,6 @@ class ModalComponent extends React.Component {
     this.setState({formErrors: fieldValidationErrors})
   }
 
-//  ifFormValid() {
-//    return this.state.titleValid && this.state.startValid&& this.state.endValid&& this.state.cliectPhoneNumberValid
-//  }
 
   validateMandatoryFields(){
     for (let i=0;i<this.state.mandatoryField.length;i++){
@@ -81,9 +78,7 @@ class ModalComponent extends React.Component {
       (name === "start" || name === "end")
         ? this.props.clickedDate._d.toISOString().substring(0, 10) + "T" + value
         : value;
-    //this.validateField(name)
     this.setState({[name+'Valid']:true})
-    //this.setState(this.state, () => { this.validateField(name) })
   };
 
   errorClass(error) {
