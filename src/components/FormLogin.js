@@ -12,15 +12,16 @@ class FormLogin extends Component {
         }
     }
 
-    doLogin = () => {
-        const fields=this.state.fields
-        const values=Object.values(fields);
-        for(let i=0;i<values.length;i++){
-           if (values[i].mandatory){
-               values[i].valid=(values[i].value.length>0)?values[i].valid:values[i].valid=false
-           }
+    doLogin = (event) => {
+        event.preventDefault();
+        const fields = this.state.fields
+        const values = Object.values(fields);
+        for (let i = 0; i < values.length; i++) {
+            if (values[i].mandatory) {
+                values[i].valid = (values[i].value.length > 0) ? values[i].valid : values[i].valid = false
+            }
         }
-        this.setState({fields:fields})
+        this.setState({fields: fields})
     }
 
     handleUserInput = (e) => {
@@ -41,7 +42,7 @@ class FormLogin extends Component {
                 login.valid = value.length >= 1;
                 break;
             case 'password':
-                password.valid = value.length >= 6;
+                password.valid = value.length >= 1;
                 break;
             default:
                 break;
@@ -49,31 +50,36 @@ class FormLogin extends Component {
     }
 
     errorClass(error) {
-        console.log(error)
-        return (error === true ? '' : 'has-error');
+        return (error === true ? '' : 'is-invalid');
     }
 
     render() {
         return (
             <form className="demoForm">
                 <h2>Sign up</h2>
-                <div className={`form-group ${this.errorClass(this.state.fields.login.valid)}`}>
+                <div className={`form-group`}>
                     <label htmlFor="login">Login</label>
-                    <input type="login" required
-                           className={`form-control`}
+                    <input type="login"
+                           className={`form-control ${this.errorClass(this.state.fields.login.valid)}`}
                            name="login"
                            placeholder="login"
                            value={this.state.fields.login.value}
                            onChange={this.handleUserInput}/>
+                    <div className="invalid-feedback">
+                        Please provide a login.
+                    </div>
                 </div>
-                <div className={`form-group ${this.errorClass(this.state.fields.password.valid)}`}>
+                <div className={`form-group`}>
                     <label htmlFor="password">Password</label>
-                    <input type="password" required
-                           className={`form-control`}
+                    <input type="password"
+                           className={`form-control ${this.errorClass(this.state.fields.password.valid)}`}
                            name="password"
                            placeholder="password"
                            value={this.state.fields.password.value}
                            onChange={this.handleUserInput}/>
+                    <div className="invalid-feedback">
+                        Please provide a password.
+                    </div>
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={this.doLogin}>Sign up</button>
             </form>
