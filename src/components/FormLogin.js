@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import '../Form.css';
+import '../FormLogin.css';
+import ReactDOM from 'react-dom'
+import CalendarComponent from './CalendarComponent';
 
 class FormLogin extends Component {
     constructor(props) {
@@ -22,6 +24,13 @@ class FormLogin extends Component {
             }
         }
         this.setState({fields: fields})
+
+        if (values.every(e=>e.valid===true)) {
+            ReactDOM.render(
+                <CalendarComponent/>,
+                document.getElementById("root")
+            )
+        }
     }
 
     handleUserInput = (e) => {
