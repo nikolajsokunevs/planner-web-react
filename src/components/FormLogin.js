@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import '../FormLogin.css';
 import ReactDOM from 'react-dom'
 import CalendarComponent from './CalendarComponent';
+import {validation, validateFields, validateField} from '../utils/validation/'
 
 class FormLogin extends Component {
     constructor(props) {
         super(props);
         this.state = {
             fields: {
-                login: {value: '', mandatory: true, valid: true},
-                password: {value: '', mandatory: true, valid: true}
+                login: {value: '', mandatory: true, valid: true, validationType: validation.NOT_EMPTY},
+                password: {value: '', mandatory: true, valid: true, validationType: validation.NOT_EMPTY}
             }
         }
     }
@@ -17,15 +18,9 @@ class FormLogin extends Component {
     doLogin = (event) => {
         event.preventDefault();
         const fields = this.state.fields
-        const values = Object.values(fields);
-        for (let i = 0; i < values.length; i++) {
-            if (values[i].mandatory) {
-                values[i].valid = (values[i].value.length > 0) ? values[i].valid : values[i].valid = false
-            }
-        }
-        this.setState({fields: fields})
+        this.setState({fields: validateFields(fields)})
 
-        if (values.every(e=>e.valid===true)) {
+        if (Object.values(fields).every(e=>e.valid===true)) {
             ReactDOM.render(
                 <CalendarComponent/>,
                 document.getElementById("root")
@@ -38,24 +33,8 @@ class FormLogin extends Component {
         const value = e.target.value;
         let fields = this.state.fields
         fields[name].value = value
-        this.validateField(name, value)
-        this.setState({fields: fields});
-    }
-
-    validateField(fieldName, value) {
-        let login = this.state.fields.login;
-        let password = this.state.fields.password;
-
-        switch (fieldName) {
-            case 'login':
-                login.valid = value.length >= 1;
-                break;
-            case 'password':
-                password.valid = value.length >= 1;
-                break;
-            default:
-                break;
-        }
+        validateField(fields[name])
+        this.setState({fields: fields})
     }
 
     errorClass(error) {
@@ -65,7 +44,7 @@ class FormLogin extends Component {
     render() {
         return (
             <form className="demoForm">
-                <h2>Sign up</h2>
+                <h2></h2>
                 <div className={`form-group`}>
                     <label htmlFor="login">Login</label>
                     <input type="login"
@@ -90,7 +69,7 @@ class FormLogin extends Component {
                         Please provide a password.
                     </div>
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={this.doLogin}>Sign up</button>
+                <button type="submit" className="btn btn-primary" onClick={this.doLogin}>Login</button>
             </form>
         )
     }
