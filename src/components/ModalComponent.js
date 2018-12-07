@@ -6,7 +6,11 @@ import {validateField, validateFields, validation} from "../utils/validation";
 class ModalComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = this.getInitialState();
+    }
+
+    getInitialState=()=>{
+        const initialState={
             event: {},
             fields: {
                 title: {value: '', mandatory: true, valid: true, validationType: validation.NOT_EMPTY},
@@ -18,6 +22,7 @@ class ModalComponent extends React.Component {
                 master: {value: '', mandatory: true, valid: true, validationType: validation.NOT_EMPTY},
             }
         }
+        return initialState;
     }
 
     createEvent = () => {
@@ -28,6 +33,11 @@ class ModalComponent extends React.Component {
         //        console.log(result)
         //        getAllEvents()
         //    })
+    };
+
+    reset = () => {
+        this.setState(this.getInitialState())
+        this.props.hideModal()
     };
 
     errorClass(error) {
@@ -151,7 +161,7 @@ class ModalComponent extends React.Component {
                             <Button color="success" onClick={this.createEvent}>
                                 Submit
                             </Button>
-                            <Button color="danger" onClick={this.props.hideModal}>
+                            <Button color="danger" onClick={this.reset}>
                                 Cancel
                             </Button>
                         </ModalFooter>
