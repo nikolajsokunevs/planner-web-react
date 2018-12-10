@@ -2,6 +2,9 @@ import React from "react";
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from "reactstrap";
 import services from "../api/services";
 import {validateField, validateFields, validation} from "../utils/validation";
+import TimePicker from 'rc-time-picker';
+import moment from 'moment';
+import 'rc-time-picker/assets/index.css';
 
 class ModalComponent extends React.Component {
     constructor(props) {
@@ -14,8 +17,8 @@ class ModalComponent extends React.Component {
             event: {},
             fields: {
                 title: {value: '', mandatory: true, valid: true, validationType: validation.NOT_EMPTY},
-                start: {value: '', mandatory: true, valid: true, validationType: validation.NOT_EMPTY},
-                end: {value: '', mandatory: true, valid: true, validationType: validation.NOT_EMPTY},
+                start: {value: moment(), mandatory: true, valid: true, validationType: validation.TIME},
+                end: {value: moment(), mandatory: true, valid: true, validationType: validation.TIME},
                 clientPhoneNumber: {value: '', mandatory: true, valid: true, validationType: validation.NOT_EMPTY},
                 clientName: {value: '', mandatory: true, valid: true, validationType: validation.NOT_EMPTY},
                 clientLastName: {value: '', mandatory: true, valid: true, validationType: validation.NOT_EMPTY},
@@ -33,6 +36,7 @@ class ModalComponent extends React.Component {
         //        console.log(result)
         //        getAllEvents()
         //    })
+        //        this.setState(this.getInitialState())
     };
 
     reset = () => {
@@ -52,6 +56,23 @@ class ModalComponent extends React.Component {
         validateField(fields[name])
         this.setState({fields: fields})
     };
+
+    startTimeChange = value =>{
+        let fields = this.state.fields
+        fields.start.value = value;
+        if(value>fields.end.value){
+            this.endTimeChange(value)
+        }
+        validateField(fields.start)
+        this.setState({fields: fields})
+    }
+
+    endTimeChange = value =>{
+        let fields = this.state.fields
+        fields.end.value = value;
+        validateField(fields.end)
+        this.setState({fields: fields})
+    }
 
     render() {
         return (
@@ -127,29 +148,35 @@ class ModalComponent extends React.Component {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="form-group col-md-6">
+                                <div className="form-group col-md-8">
                                     <label> Start time: </label>{" "}
-                                    <input
-                                        name="start"
-                                        type="text"
-                                        className={`form-control ${this.errorClass(this.state.fields.start.valid)}`}
-                                        onChange={this.handleInputChange}
-                                        value={this.state.fields.start.value}
+                                    <TimePicker
+                                        name="startTime"
+                                        defaultValue={this.state.fields.start.value}
+                                        showSecond={false}
+                                        className="xxx"
+                                        format={'h:mm a'}
+                                        use12Hours
+                                        inputReadOnly
+                                        onChange={this.startTimeChange}
                                     />
                                     <div className="invalid-feedback">
-                                    Please provide a start date.
-                                </div>
+                                        Please provide a start date.
+                                    </div>
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="form-group col-md-6">
+                                <div className="form-group col-md-8">
                                     <label> End time: </label>{" "}
-                                    <input
-                                        name="end"
-                                        type="text"
-                                        className={`form-control ${this.errorClass(this.state.fields.end.valid)}`}
-                                        onChange={this.handleInputChange}
+                                    <TimePicker
+                                        name="endTime"
                                         value={this.state.fields.end.value}
+                                        showSecond={false}
+                                        className="xxx"
+                                        format={'h:mm a'}
+                                        use12Hours
+                                        inputReadOnly
+                                        onChange={this.endTimeChange}
                                     />
                                     <div className="invalid-feedback">
                                         Please provide a end date.
