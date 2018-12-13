@@ -25,6 +25,8 @@ class FormLogin extends Component {
             services.login({username:this.state.fields.login.value,
                 password:this.state.fields.password.value}).then((result) => {
                 if (result.isAuthenticationSuccessful){
+                    console.log(localStorage.setItem('token', result.token))
+                    console.log(localStorage)
                 ReactDOM.render(
                     <CalendarComponent/>,
                     document.getElementById("root")

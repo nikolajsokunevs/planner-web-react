@@ -7,22 +7,33 @@ export const DELETE = requestWrapper('DELETE');
 
 function requestWrapper(method) {
     return (url, params, data, executor, headers) => {
+        console.log(localStorage.getItem('token'))
+
         const body = data ? data : null;
         const uriParams = params ? {params: JSON.stringify(params)} : null;
-        const initialRequetData = {
+        const initialRequestData = {
             url: url,
             method: method,
             params: uriParams,
             data: body,
-            headers: headers
+            headers: addAuthHeader(headers)
         };
-        return axios(initialRequetData).then(function (response) {
+        console.log(initialRequestData)
+        return axios(initialRequestData).then(function (response) {
             return parseDataJSON(response)
         }).catch(function(error){
           console.log(error)
           return error;
         })
     }
+}
+
+function addAuthHeader(headers){
+    const composed = headers?headers:{}
+    if (localStorage.getItem('token')!=null){
+        composed['Authorization']=localStorage.getItem('token');
+    }
+    return composed
 }
 
 function parseDataJSON(res) {
