@@ -10,7 +10,12 @@ const createEvent=(event)=>{
     return POST(BASE_URL+'myapp/event/add', null, event)
 }
 
+const login=(loginDetails)=>{
+    return POST(BASE_URL+'myapp/user/signIn', null, loginDetails)
+}
+
 export default{
     getAllEvents,
-    createEvent
+    createEvent,
+    login
 }

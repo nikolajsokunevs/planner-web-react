@@ -3,6 +3,7 @@ import '../FormLogin.css';
 import ReactDOM from 'react-dom'
 import CalendarComponent from './CalendarComponent';
 import {validation, validateFields, validateField} from '../utils/validation/'
+import services from "../api/services";
 
 class FormLogin extends Component {
     constructor(props) {
@@ -21,10 +22,15 @@ class FormLogin extends Component {
         this.setState({fields: validateFields(fields)})
 
         if (Object.values(fields).every(e=>e.valid===true)) {
-            ReactDOM.render(
-                <CalendarComponent/>,
-                document.getElementById("root")
-            )
+            services.login({username:this.state.fields.login.value,
+                password:this.state.fields.password.value}).then((result) => {
+                if (result.isAuthenticationSuccessful){
+                ReactDOM.render(
+                    <CalendarComponent/>,
+                    document.getElementById("root")
+                )
+                }
+            })
         }
     }
 
