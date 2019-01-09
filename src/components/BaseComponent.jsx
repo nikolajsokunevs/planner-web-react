@@ -6,10 +6,10 @@ class BaseComponent extends Component {
   state = {};
   render() {
     return (
-      <div>
+      <React.Fragment>
         <HeaderComponent />
         <CalendarComponent />
-      </div>
+      </React.Fragment>
     );
   }
 }

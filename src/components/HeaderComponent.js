@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 
 class HeaderComponent extends Component {
-  state = {};
+  state = {
+    text: "Plan It"
+  };
   render() {
-    return <h1>Plan It</h1>;
+    return (
+      <div className="header">
+        <h1>{this.state.text}</h1>
+        <button className="logout">Log out</button>
+      </div>
+    );
   }
 }
 

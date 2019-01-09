@@ -9,19 +9,19 @@ code {
     monospace;
 }
 
-#calendar{
+#calendar {
   max-width: 700px;
   max-height: 600px;
   margin: auto;
 }
 
-#calendar .fc-today{
+#calendar .fc-today {
   background: #ccc;
 }
-#calendar .fc-day{
-  transition: all .5s;
+#calendar .fc-day {
+  transition: all 0.5s;
 }
-#calendar .fc-day:hover{
+#calendar .fc-day:hover {
   background: #ccc;
 }
 
@@ -31,4 +31,12 @@ code {
 
 .display-none {
   display: none;
+}
+
+.header {
+  background-color: coral;
+}
+
+.logout {
+  display: inline-block;
 }
