@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../FormLogin.css";
 import ReactDOM from "react-dom";
-import CalendarComponent from "./CalendarComponent";
 import {
   validation,
   validateFields,
