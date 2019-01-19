@@ -8,7 +8,6 @@ import {
 } from "../utils/validation/";
 import App from "./App";
 
-
 class CreateAccountComponent extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +20,12 @@ class CreateAccountComponent extends Component {
           validationType: validation.NOT_EMPTY
         },
         password: {
+          value: "",
+          mandatory: true,
+          valid: true,
+          validationType: validation.NOT_EMPTY
+        },
+        confirmPassword: {
           value: "",
           mandatory: true,
           valid: true,
@@ -44,11 +49,16 @@ class CreateAccountComponent extends Component {
   }
 
   doSignUp = event => {
-    event.preventDefault();
-    services.createAccount({
-      username: this.state.fields.username.value,
-      password: this.state.fields.password.value
-    });
+    if (
+      this.state.fields.password.value ===
+      this.state.fields.confirmPassword.value
+    ) {
+      event.preventDefault();
+      services.createAccount({
+        username: this.state.fields.username.value,
+        password: this.state.fields.password.value
+      });
+    }
   };
 
   navigateHome() {
@@ -60,7 +70,6 @@ class CreateAccountComponent extends Component {
       <React.Fragment>
         <h1>Create Account</h1>
 
-        <legend>Account Information</legend>
         <div>
           <div>
             <div title="Username">
@@ -71,7 +80,7 @@ class CreateAccountComponent extends Component {
                   this.state.fields.username.valid
                 )}`}
                 name="username"
-                placeholder="username"
+                placeholder="Username"
                 value={this.state.fields.username.value}
                 onChange={this.handleUserInput}
               />
@@ -87,13 +96,10 @@ class CreateAccountComponent extends Component {
                   this.state.fields.password.valid
                 )}`}
                 name="password"
-                placeholder="password"
+                placeholder="Password"
                 value={this.state.fields.password.value}
                 onChange={this.handleUserInput}
               />
-              <span className="circle">
-                <span className="tick" />
-              </span>
             </div>
             <div
               className="formSection_Item"
@@ -102,10 +108,10 @@ class CreateAccountComponent extends Component {
               <label>Confirm Password</label>
               <input
                 type="password"
-                name="PasswordConfirm"
-                id="PasswordConfirm"
-                required
+                name="confirmPassword"
                 placeholder="Confirm Password"
+                value={this.state.fields.confirmPassword.value}
+                onChange={this.handleUserInput}
               />
             </div>
             <button name="Submit" onClick={this.doSignUp}>
