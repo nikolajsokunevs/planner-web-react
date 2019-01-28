@@ -79,6 +79,7 @@ class FormLogin extends Component {
             placeholder="login"
             value={this.state.fields.login.value}
             onChange={this.handleUserInput}
+            autoFocus
           />
           <div className="invalid-feedback">Please provide a login.</div>
         </div>
