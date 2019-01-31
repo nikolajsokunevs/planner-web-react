@@ -21,7 +21,10 @@ class App extends Component {
           <h2>Best Planner Ever!</h2>
         </div>
         <FormLogin />
-        <button onClick={this.navigateToRegistrationPage}>
+        <button
+          className="btn btn-secondary m-2"
+          onClick={this.navigateToRegistrationPage}
+        >
           Create Account
         </button>
       </div>

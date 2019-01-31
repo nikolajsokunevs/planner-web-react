@@ -32,46 +32,37 @@ class CreateAccountComponent extends Component {
           valid: true,
           validationType: validation.NOT_EMPTY
         }
-      }
+      },
+      responseText: ""
     };
   }
-
-  // doLogin = event => {
-  //   event.preventDefault();
-  //   const fields = this.state.fields;
-  //   this.setState({ fields: validateFields(fields) });
-
-  //   if (Object.values(fields).every(e => e.valid === true)) {
-  //     services
-  //       .login({
-  //         username: this.state.fields.login.value,
-  //         password: this.state.fields.password.value
-  //       })
-  //       .then(result => {
-  //         if (result.isAuthenticationSuccessful) {
-  //           console.log(localStorage.setItem("token", result.token));
-  //           console.log(localStorage);
-  //           ReactDOM.render(<BaseComponent />, document.getElementById("root"));
-  //         }
-  //       });
-  //   }
-  // };
 
   doSignUp = event => {
     event.preventDefault();
     const fields = this.state.fields;
     this.setState({ fields: validateFields(fields) });
+    if (this.state.fields.username.value.length > 4) {
+      this.callCreateAccountApi(event);
+    }
+  };
+
+  callCreateAccountApi(event) {
     if (
       this.state.fields.password.value ===
       this.state.fields.confirmPassword.value
     ) {
       event.preventDefault();
-      services.createAccount({
-        username: this.state.fields.username.value,
-        password: this.state.fields.password.value
-      });
+      services
+        .createAccount({
+          username: this.state.fields.username.value,
+          password: this.state.fields.password.value
+        })
+        .then(result => {
+          console.log(result);
+          this.state.responseText = result;
+        });
     }
-  };
+  }
 
   handleUserInput = e => {
     const name = e.target.name;
@@ -105,7 +96,10 @@ class CreateAccountComponent extends Component {
             onChange={this.handleUserInput}
             autoFocus
           />
-          <div className="invalid-feedback">Please provide a login.</div>
+          <div className="invalid-feedback">
+            Your username needs to be between 6 and 20 characters long and can
+            only contain letters and numbers
+          </div>
         </div>
         <div className={`form-group`}>
           <label htmlFor="password">Password</label>
@@ -119,7 +113,10 @@ class CreateAccountComponent extends Component {
             value={this.state.fields.password.value}
             onChange={this.handleUserInput}
           />
-          <div className="invalid-feedback">Please provide a password.</div>
+          <div className="invalid-feedback">
+            Your password needs to be between 6 and 20 characters long and
+            contain at least one letter and one number
+          </div>
         </div>
         <div className={"form-group"}>
           <label htmlFor="confirmPassword">Confirm Password</label>
@@ -133,7 +130,9 @@ class CreateAccountComponent extends Component {
             value={this.state.fields.confirmPassword.value}
             onChange={this.handleUserInput}
           />
-          <div className="invalid-feedback">Please confirm password.</div>
+          <div className="invalid-feedback">
+            Your passwords do not match. Please try again
+          </div>
         </div>
         <button
           type="submit"
@@ -149,83 +148,10 @@ class CreateAccountComponent extends Component {
         >
           Go Back
         </button>
+        <div>{this.state.responseText}</div>
       </form>
     );
   }
-
-  // handleUserInput = e => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   let fields = this.state.fields;
-  //   fields[name].value = value;
-  //   validateField(fields[name]);
-  //   this.setState({ fields: fields });
-  // };
-
-  // errorClass(error) {
-  //   return error === true ? "" : "is-invalid";
-  // }
-
-  // navigateHome() {
-  //   ReactDOM.render(<App />, document.getElementById("root"));
-  // }
-
-  // render() {
-  //   return (
-  //     <React.Fragment>
-  //       <h1>Create Account</h1>
-
-  //       <div>
-  //         <div>
-  //           <div title="Username">
-  //             <label>Username</label>
-  //             <input
-  //               type="username"
-  //               className={`form-control ${this.errorClass(
-  //                 this.state.fields.username.valid
-  //               )}`}
-  //               name="username"
-  //               placeholder="Username"
-  //               value={this.state.fields.username.value}
-  //               onChange={this.handleUserInput}
-  //             />
-  //             <div className="invalid-feedback">Please provide a password.</div>
-  //           </div>
-  //           <div className={`form-group`}>
-  //             <label>Password</label>
-  //             <input
-  //               type="password"
-  //               className={`form-control ${this.errorClass(
-  //                 this.state.fields.password.valid
-  //               )}`}
-  //               name="password"
-  //               placeholder="Password"
-  //               value={this.state.fields.password.value}
-  //               onChange={this.handleUserInput}
-  //             />
-  //             <div className="invalid-feedback">Please provide a password.</div>
-  //           </div>
-  //           <div>
-  //             <label>Confirm Password</label>
-  //             <input
-  //               type="password"
-  //               name="confirmPassword"
-  //               placeholder="Confirm Password"
-  //               value={this.state.fields.confirmPassword.value}
-  //               onChange={this.handleUserInput}
-  //             />
-  //           </div>
-  //           <button name="Submit" onClick={this.doSignUp}>
-  //             Register
-  //           </button>
-  // <button name="Back" onClick={this.navigateHome}>
-  //     Go Back
-  //   </button>
-  //         </div>
-  //       </div>
-  //     </React.Fragment>
-  //   );
-  // }
 }
 
 export default CreateAccountComponent;

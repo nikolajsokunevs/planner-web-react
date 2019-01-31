@@ -99,7 +99,7 @@ class FormLogin extends Component {
         </div>
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary m-2"
           onClick={this.doLogin}
         >
           Login
