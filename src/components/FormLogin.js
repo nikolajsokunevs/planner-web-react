@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../FormLogin.css";
 import ReactDOM from "react-dom";
-import CalendarComponent from "./CalendarComponent";
 import {
   validation,
   validateFields,
@@ -68,7 +67,7 @@ class FormLogin extends Component {
   render() {
     return (
       <form className="demoForm">
-        <h2 />
+        <p />
         <div className={`form-group`}>
           <label htmlFor="login">Login</label>
           <input
@@ -80,6 +79,7 @@ class FormLogin extends Component {
             placeholder="login"
             value={this.state.fields.login.value}
             onChange={this.handleUserInput}
+            autoFocus
           />
           <div className="invalid-feedback">Please provide a login.</div>
         </div>
@@ -99,7 +99,7 @@ class FormLogin extends Component {
         </div>
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary m-2"
           onClick={this.doLogin}
         >
           Login

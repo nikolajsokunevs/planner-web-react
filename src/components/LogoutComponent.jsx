@@ -5,13 +5,13 @@ import App from "./App";
 class LogoutComponent extends Component {
   state = {};
 
-  doLogout() {
+  navigateHome() {
     ReactDOM.render(<App />, document.getElementById("root"));
   }
 
   render() {
     return (
-      <button className="logout" onClick={this.doLogout}>
+      <button className="logout" onClick={this.navigateHome}>
         Log out
       </button>
     );
