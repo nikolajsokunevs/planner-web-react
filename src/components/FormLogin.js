@@ -67,7 +67,7 @@ class FormLogin extends Component {
   render() {
     return (
       <form className="demoForm">
-        <h2 />
+        <p />
         <div className={`form-group`}>
           <label htmlFor="login">Login</label>
           <input

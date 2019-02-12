@@ -1,6 +1,5 @@
 import React from "react";
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from "reactstrap";
-import services from "../api/services";
 import {validateField, validateFields, validation} from "../utils/validation";
 import TimePicker from 'rc-time-picker';
 import moment from 'moment';
@@ -31,7 +30,7 @@ class ModalComponent extends React.Component {
     createEvent = () => {
         const fields = this.state.fields
         this.setState({fields: validateFields(fields)})
-        const getAllEvents = this.props.getAllEvents;
+       // const getAllEvents = this.props.getAllEvents;
         //    services.createEvent(this.state.event).then((result) => {
         //        console.log(result)
         //        getAllEvents()

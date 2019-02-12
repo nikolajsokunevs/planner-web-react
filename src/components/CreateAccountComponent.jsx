@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import services from "../api/services";
 import {
   validation,
   validateFields,
   validateField
 } from "../utils/validation/";
-import App from "./App";
-import BaseComponent from "./BaseComponent";
 
 class CreateAccountComponent extends Component {
   constructor(props) {
@@ -59,7 +56,7 @@ class CreateAccountComponent extends Component {
         })
         .then(result => {
           console.log(result);
-          this.state.responseText = result;
+          this.setState({ responseText: result });
         });
     }
   }
@@ -81,8 +78,6 @@ class CreateAccountComponent extends Component {
     return (
       <form className="demoForm">
         <h1 className="form-signin-heading">Create Account</h1>
-
-        <h2 />
         <div className={`form-group`}>
           <label htmlFor="username">Username</label>
           <input
