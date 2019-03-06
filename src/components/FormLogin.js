@@ -26,7 +26,8 @@ class FormLogin extends Component {
           valid: true,
           validationType: validation.NOT_EMPTY
         }
-      }
+      },
+      unsuccessfulLoginText: ""
     };
   }
 
@@ -46,6 +47,11 @@ class FormLogin extends Component {
             console.log(localStorage.setItem("token", result.token));
             console.log(localStorage);
             ReactDOM.render(<BaseComponent />, document.getElementById("root"));
+          } else {
+            console.log(result.message);
+            this.setState({
+              unsuccessfulLoginText: result.message
+            });
           }
         });
     }
@@ -96,6 +102,7 @@ class FormLogin extends Component {
             onChange={this.handleUserInput}
           />
           <div className="invalid-feedback">Please provide a password.</div>
+          <div>{this.state.unsuccessfulLoginText}</div>
         </div>
         <button
           type="submit"

@@ -15,7 +15,7 @@ class CreateAccountComponent extends Component {
           value: "",
           mandatory: true,
           valid: true,
-          validationType: validation.NOT_EMPTY
+          validationType: validation.LOGIN
         },
         password: {
           value: "",
@@ -38,7 +38,7 @@ class CreateAccountComponent extends Component {
     event.preventDefault();
     const fields = this.state.fields;
     this.setState({ fields: validateFields(fields) });
-    if (this.state.fields.username.value.length > 4) {
+    if (this.state.fields.username.valid) {
       this.callCreateAccountApi(event);
     }
   };
@@ -70,6 +70,25 @@ class CreateAccountComponent extends Component {
     this.setState({ fields: fields });
   };
 
+  handleUserInputWithoutValidation = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    let fields = this.state.fields;
+    fields[name].value = value;
+    if (!this.state.fields.username.valid) {
+      validateField(fields[name]);
+    }
+    this.setState({ fields: fields });
+  };
+
+  handleUserInputOnBlur = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    let fields = this.state.fields;
+    fields[name].value = value;
+    this.setState({ fields: fields });
+  };
+
   errorClass(error) {
     return error === true ? "" : "is-invalid";
   }
@@ -88,7 +107,8 @@ class CreateAccountComponent extends Component {
             name="username"
             placeholder="username"
             value={this.state.fields.username.value}
-            onChange={this.handleUserInput}
+            onChange={this.handleUserInputWithoutValidation}
+            onBlur={this.handleUserInput}
             autoFocus
           />
           <div className="invalid-feedback">
@@ -131,7 +151,7 @@ class CreateAccountComponent extends Component {
         </div>
         <button
           type="submit"
-          className="btn btn-lg btn-primary btn-block"
+          className="btn btn-lg btn-primary btn-block m-2"
           onClick={this.doSignUp}
         >
           Register
