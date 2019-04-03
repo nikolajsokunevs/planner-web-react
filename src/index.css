@@ -1,7 +1,9 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+.body {
+    background-repeat: repeat;
+    background: #f8f8fa;
+    font-family: Roboto,sans-serif;
+    color: #5b626b;
+    font-size: 14px;
 }
 
 code {

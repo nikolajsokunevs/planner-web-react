@@ -5,11 +5,7 @@ import FormLogin from './FormLogin';
 class App extends Component {
     render() {
         return (
-            <div className="App">
-                <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h2>Best Planner Ever!</h2>
-                </div>
+            <div className="App pb-0">
                 <FormLogin />
             </div>
         );
