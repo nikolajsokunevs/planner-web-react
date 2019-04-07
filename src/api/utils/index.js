@@ -7,8 +7,6 @@ export const DELETE = requestWrapper('DELETE');
 
 function requestWrapper(method) {
     return (url, params, data, executor, headers) => {
-        console.log(localStorage.getItem('token'))
-
         const body = data ? data : null;
         const uriParams = params ? {params: JSON.stringify(params)} : null;
         const initialRequestData = {
@@ -18,11 +16,9 @@ function requestWrapper(method) {
             data: body,
             headers: addAuthHeader(headers)
         };
-        console.log(initialRequestData)
         return axios(initialRequestData).then(function (response) {
             return parseDataJSON(response)
         }).catch(function(error){
-          console.log(error)
           return error;
         })
     }

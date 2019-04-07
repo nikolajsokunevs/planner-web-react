@@ -81,8 +81,8 @@ class FormLogin extends Component {
           </div>
           <div className="account-card-content">
             <form className="form-horizontal m-t-30">
-              <InputFormComponent type="input" className={this.errorClass(this.state.fields.login.valid)} name="login" placeholder="Enter username" onChange={this.handleUserInput}/>
-              <InputFormComponent type="password" className={this.errorClass(this.state.fields.password.valid)} name="password" placeholder="Enter password" onChange={this.handleUserInput}/>
+              <InputFormComponent label="Username" type="input" className={this.errorClass(this.state.fields.login.valid)} name="login" placeholder="Enter username" onChange={this.handleUserInput}/>
+              <InputFormComponent label="Password" type="password" className={this.errorClass(this.state.fields.password.valid)} name="password" placeholder="Enter password" onChange={this.handleUserInput}/>
               <div className="form-group row m-t-20">
                 <div className="col-sm-6">
                   <div className="custom-control custom-checkbox">
@@ -106,7 +106,7 @@ class FormLogin extends Component {
         </div>
         <div className="m-t-40 text-center">
           <p>Don't have an account?
-            <a className="font-500 text-primary"> Signup now</a>
+            <a href="#" className="font-500 text-primary"> Signup now</a>
           </p>
           <p>© 2019. Crafted by Kolyan i Marat <FontAwesomeIcon icon={faFistRaised} className="fist"/></p>
         </div>

@@ -1,15 +1,11 @@
 .body {
     background-repeat: repeat;
     background: #f8f8fa;
-    font-family: Roboto,sans-serif;
+    
     color: #5b626b;
     font-size: 14px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
 
 #calendar{
   max-width: 700px;

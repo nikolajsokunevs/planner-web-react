@@ -1,8 +1,7 @@
 import React from "react";
 import services from "../api/services"
-import FullCalendar from "fullcalendar-reactwrapper";
 import ModalComponent from "./ModalComponent";
-
+import FullCalendar from "fullcalendar-reactwrapper";
 class CalendarComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -57,4 +56,4 @@ class CalendarComponent extends React.Component {
     }
 }
 
-export default CalendarComponent;
+export default CalendarComponent
