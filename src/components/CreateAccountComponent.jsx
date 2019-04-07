@@ -22,13 +22,12 @@ class CreateAccountComponent extends Component {
           value: "",
           mandatory: true,
           valid: true,
-          validationType: validation.NOT_EMPTY
+          validationType: validation.PASSWORD
         },
         confirmPassword: {
           value: "",
           mandatory: true,
-          valid: true,
-          validationType: validation.NOT_EMPTY
+          valid: true
         }
       },
       responseText: "",
@@ -40,27 +39,31 @@ class CreateAccountComponent extends Component {
     event.preventDefault();
     const fields = this.state.fields;
     this.setState({ fields: validateFields(fields) });
-    if (this.state.fields.username.valid) {
-      this.callCreateAccountApi(event);
+    if (this.state.fields.username.valid && this.state.fields.password.valid) {
+      if (
+        this.state.fields.password.value ===
+        this.state.fields.confirmPassword.value
+      ) {
+        this.callCreateAccountApi(event);
+      } else {
+        let cp = this.state.fields.confirmPassword;
+        cp.valid = false;
+        this.setState({ confirmPassword: cp });
+      }
     }
   };
 
   callCreateAccountApi(event) {
-    if (
-      this.state.fields.password.value ===
-      this.state.fields.confirmPassword.value
-    ) {
-      event.preventDefault();
-      services
-        .createAccount({
-          username: this.state.fields.username.value,
-          password: this.state.fields.password.value
-        })
-        .then(result => {
-          console.log(result);
-          this.setState({ responseText: result });
-        });
-    }
+    event.preventDefault();
+    services
+      .createAccount({
+        username: this.state.fields.username.value,
+        password: this.state.fields.password.value
+      })
+      .then(result => {
+        console.log(result);
+        this.setState({ responseText: result });
+      });
   }
 
   handleUserInput = e => {
@@ -100,6 +103,7 @@ class CreateAccountComponent extends Component {
     e.preventDefault();
     this.setState({ isTermsPopupDisplayed: true });
   };
+
   errorClass(error) {
     return error === true ? "" : "is-invalid";
   }
@@ -124,7 +128,6 @@ class CreateAccountComponent extends Component {
               placeholder="username"
               value={this.state.fields.username.value}
               onChange={this.handleUserInputWithoutValidation}
-              onBlur={this.handleUserInput}
               autoFocus
             />
             <div className="invalid-feedback">
@@ -142,7 +145,7 @@ class CreateAccountComponent extends Component {
               name="password"
               placeholder="password"
               value={this.state.fields.password.value}
-              onChange={this.handleUserInput}
+              onChange={this.handleUserInputWithoutValidation}
             />
             <div className="invalid-feedback">
               Your password needs to be between 6 and 20 characters long and
@@ -166,22 +169,16 @@ class CreateAccountComponent extends Component {
             </div>
           </div>
           <div>
-            <input type="checkbox" className="m-2" />
-            <label>
-              I accept the{" "}
-              <a onClick={this.showTerms} style={{ cursor: "pointer" }}>
+            <label className="m-2">
+              By registering with PlanIt you agree to the{" "}
+              <a
+                onClick={this.showTerms}
+                style={{ cursor: "pointer", color: "blue" }}
+              >
                 Terms and Conditions
               </a>
             </label>
           </div>
-          <button
-            onClick={
-              this.showTerms
-              //  e.preventDefault;
-            }
-          >
-            terms
-          </button>
           <button
             type="submit"
             className="btn btn-lg btn-primary btn-block m-2"
@@ -189,11 +186,7 @@ class CreateAccountComponent extends Component {
           >
             Register
           </button>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={this.navigateHome}
-          >
+          <button className="btn btn-primary" onClick={this.navigateHome}>
             Go Back
           </button>
           <div>{this.state.responseText}</div>

@@ -111,11 +111,6 @@ class FormLogin extends Component {
         >
           Login
         </button>
-        <button
-          onClick={e => {
-            e.preventDefault();
-          }}
-        />
       </form>
     );
   }

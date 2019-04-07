@@ -2,7 +2,8 @@ export const validation = {
   TIME: "time",
   PHONE: "phone",
   NOT_EMPTY: "not_empty",
-  LOGIN: "login"
+  LOGIN: "login",
+  PASSWORD: "password"
 };
 
 export function validateFields(fields) {
@@ -24,6 +25,9 @@ export function validateField(field) {
         break;
       case validation.LOGIN:
         field.valid = isLoginValid(field.value);
+        break;
+      case validation.PASSWORD:
+        field.valid = field.value.length >= 5;
         break;
       default:
         field.valid = field.value.length >= 1;
