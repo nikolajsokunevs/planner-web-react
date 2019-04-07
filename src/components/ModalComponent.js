@@ -56,7 +56,7 @@ class ModalComponent extends React.Component {
         this.setState({fields: fields})
     };
 
-    startTimeChange = value =>{
+    startTimeChange = value => {
         let fields = this.state.fields
         fields.start.value = value;
         if(value>fields.end.value){
@@ -66,7 +66,7 @@ class ModalComponent extends React.Component {
         this.setState({fields: fields})
     }
 
-    endTimeChange = value =>{
+    endTimeChange = value => {
         let fields = this.state.fields
         fields.end.value = value;
         validateField(fields.end)
