@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import services from "../../api/services";
 import InputFormComponent from "../controls/InputFormComponent";
 import HeaderComponent from "../HeaderComponent";
+import TermsComponent from "../TermsComponent";
 import Login from "../Login";
 import {
   validation,
@@ -18,6 +19,7 @@ class UserRegistration extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showTermOfUse:false,
       fields: {
         username: {
           value: "",
@@ -82,6 +84,15 @@ class UserRegistration extends Component {
     }
   }
 
+
+  showModal = (date) => {
+   this.setState({ showTermOfUse: true});
+  };
+
+  hideModal = () => {
+    this.setState({ showTermOfUse: false});
+  };
+
   handleUserInput = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -109,6 +120,8 @@ class UserRegistration extends Component {
 
   render() {
     return (
+      <div>
+      <TermsComponent showTerms={this.state.showTermOfUse} hideTerms={this.hideModal}/>
       <div className="wrapper-page">
         <div className="card overflow-hidden account-card mx-3">
           <div className="bg-primary p-4 text-white text-center position-relative">
@@ -164,7 +177,7 @@ class UserRegistration extends Component {
                 <div className="col-12 m-t-20">
                   <p className="mb-0">
                     By registering you agree to the PlanIt
-                    <a href="#" className="text-primary">
+                    <a href="#" className="text-primary" onClick={this.showModal}>
                       {" "}
                       Terms of Use
                     </a>
@@ -187,6 +200,7 @@ class UserRegistration extends Component {
             <FontAwesomeIcon icon={faFistRaised} className="fist" />
           </p>
         </div>
+      </div>
       </div>
     );
   }

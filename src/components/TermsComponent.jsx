@@ -10,7 +10,6 @@ class TermsComponent extends Component {
     return (
       <div>
         <Modal isOpen={this.props.showTerms}>
-          <form onSubmit={this.hideTerms} />
           <ModalHeader>Terms and Conditions</ModalHeader>
           {"  "}
           <ModalBody>Hello</ModalBody>
